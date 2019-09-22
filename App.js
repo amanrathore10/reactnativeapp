@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { Text, View , Button } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {createAppContainer, createSwitchNavigator } from 'react-navigation';
@@ -12,8 +12,9 @@ import AccountScreen from './src/Views/Account';
 import SearchScreen from './src/Views/Search';
 import LoadingScreen from './src/Views/Loading';
 import DetailsScreen from './src/Views/Details';
-
-class IconWithBadge extends React.Component {
+import DrawerContainer from './src/Components/DrawerContainer';
+import TabNavigator from './src/Navigators/TabNavigator';
+class IconWithBadge extends Component {
   render() {
     const { name, badgeCount, color, size } = this.props;
     return (
@@ -109,10 +110,12 @@ const AppContainer =
   
   const  AppStack = createDrawerNavigator(
     { 
-      Home: AppContainer,
+      Home: TabNavigator,
       Profile: () => <View style={{flex:1}}><Text>Profile Page</Text></View>,
     },
-    
+    {
+      contentComponent: ({navigation}) => <DrawerContainer  navigation={navigation}/>
+    }
   );
   export default createAppContainer(
     createSwitchNavigator({
